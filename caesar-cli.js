@@ -1,7 +1,5 @@
 const { program } = require('commander');
-const stream = require('stream');
-const { promisify } = require('util');
-
+const { pipeline } = require('stream');
 
 const validate = require('./src/validators/validators');
 const {
@@ -9,8 +7,6 @@ const {
   transformStream,
   writeStream
 } = require('./src/streams/streams');
-
-const pipeline = promisify(stream.pipeline);
 
 program
     .storeOptionsAsProperties(false)
@@ -26,5 +22,8 @@ validate(options);
 pipeline(
   readStream(options.input),
   transformStream(+options.shift, options.action),
-  writeStream(options.output)
-).catch(console.error);
+  writeStream(options.output),
+  (error) => {
+    if(error) console.error;
+  }
+);
