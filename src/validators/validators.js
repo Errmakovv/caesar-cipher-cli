@@ -24,19 +24,15 @@ function validate({action, shift, input, output}) {
 	}
 
 	if (input) {
-		fs.access(input, fs.constants.F_OK | fs.constants.R_OK, (err) => {
-			if (err) {
-				endProcessWithError(ERRORS.input)
-			}
-		});
+		if (!fs.existsSync(input)) {
+			endProcessWithError(ERRORS.input);
+		}
 	}
 
 	if (output) {
-		fs.access(output, fs.constants.F_OK | fs.constants.W_OK, (err) => {
-			if (err) {
-				endProcessWithError(ERRORS.output)
-			}
-		});
+		if (!fs.existsSync(output)) {
+			endProcessWithError(ERRORS.output);
+		}
 	}
 }
   

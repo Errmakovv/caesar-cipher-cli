@@ -23,7 +23,7 @@ pipeline(
   readStream(options.input),
   transformStream(+options.shift, options.action),
   writeStream(options.output),
-  (error) => {
-    if(error) console.error;
+  (err) => {
+    if(err) console.error;
   }
 );

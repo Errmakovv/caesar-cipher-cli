@@ -27,7 +27,11 @@ function writeStream(filePath) {
     return process.stdout;
   }
 
-  return fs.createWriteStream(filePath);
+  return fs.createWriteStream(filePath, {
+    'flags': 'a',
+    'encoding': null,
+    'mode': '0666'
+  });
 }
 
 module.exports = {
